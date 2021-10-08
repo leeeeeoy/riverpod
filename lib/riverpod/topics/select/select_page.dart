@@ -8,13 +8,7 @@ class SelectPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user1 = ref.watch(userProvider);
-    ref.listen(userProvider, (value) {
-      print('userProvider listen');
-    });
-    // final userName =
-    // ref.watch(userProvider.select((value) => value.state.name));
-    // final userAge = ref.watch(userProvider.select((value) => value.state.age));
+    final users = ref.watch(usersProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -25,42 +19,41 @@ class SelectPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              'user1: ' + user1,
+              'user1: ' + '${users.users[0]}',
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            // Text(
-            //   'user1.age: ' + '${user1.age}',
-            //   style: const TextStyle(
-            //     fontSize: 24,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            // Text(
-            //   'userName: ' + userName,
-            //   style: const TextStyle(
-            //     fontSize: 24,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            // Text(
-            //   'userName: ' + userAge,
-            //   style: const TextStyle(
-            //     fontSize: 24,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            ElevatedButton(
-              onPressed: () {
-                ref.read(userProvider.notifier).setName();
-              },
-              child: const Text('Change user name'),
+            Text(
+              'user2: ' + '${users.users[1]}',
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'user3: ' + '${users.users[2]}',
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             ElevatedButton(
               onPressed: () {
-                ref.read(userProvider.notifier).setAge();
+                ref.read(usersProvider.notifier).setUserAge(0);
+              },
+              child: const Text('Change user age'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                ref.read(usersProvider.notifier).setUserAge(1);
+              },
+              child: const Text('Change user age'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                ref.read(usersProvider.notifier).setUserAge(2);
               },
               child: const Text('Change user age'),
             ),

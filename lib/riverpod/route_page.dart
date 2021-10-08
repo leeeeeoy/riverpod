@@ -12,6 +12,8 @@ class RoutePage extends StatelessWidget {
       ),
       body: Center(
         child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.start,
+          spacing: 5.0,
           children: [
             ElevatedButton(
                 onPressed: () {
@@ -23,6 +25,16 @@ class RoutePage extends StatelessWidget {
                   Get.toNamed('/practice');
                 },
                 child: const Text('Practice')),
+            ElevatedButton(
+                onPressed: () {
+                  Get.toNamed('/scroll');
+                },
+                child: const Text('Scroll')),
+            ElevatedButton(
+                onPressed: () {
+                  Get.toNamed('/stream');
+                },
+                child: const Text('Stream')),
           ],
         ),
       ),

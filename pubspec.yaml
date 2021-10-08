@@ -14,12 +14,19 @@ dependencies:
   get:
   flutter_riverpod: ^1.0.0-dev.7
   intl:
+  freezed_annotation:
+  infinite_scroll_pagination:
+  rxdart:
+  dio:
 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
+  freezed:
+  json_serializable:
 
   flutter_lints: ^1.0.0
 

@@ -14,23 +14,22 @@ final myCounterStateNotifierProvider =
   return MyCounter();
 });
 
+final countProvider1 = StateProvider<int>((ref) => 0);
+final countProvider2 = StateProvider<int>((ref) => 10);
+
+final countProvider = Provider<int>((ref) {
+  final count1 = ref.watch(countProvider1);
+  final count2 = ref.watch(countProvider2);
+
+  return count1.state + count2.state;
+});
+
 class PracticePage extends ConsumerWidget {
   const PracticePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final counterRead = ref.read(myCounterStateNotifierProvider.notifier);
-    final counterState = ref.watch(myCounterStateNotifierProvider);
-
-    ref.listen(
-      myCounterStateNotifierProvider,
-      ((int num) {
-        // ignore: avoid_print
-        print('바뀔때마다 동작');
-        // ignore: avoid_print
-        print('ref.listen: $num');
-      }),
-    );
+    final count = ref.watch(countProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +37,7 @@ class PracticePage extends ConsumerWidget {
       ),
       body: Center(
         child: Text(
-          'Value: $counterState',
+          'Value: $count',
           style: const TextStyle(
             fontSize: 48,
             fontWeight: FontWeight.bold,
@@ -52,7 +51,7 @@ class PracticePage extends ConsumerWidget {
           children: [
             FloatingActionButton(
               heroTag: '111',
-              onPressed: () => counterRead.increment(),
+              onPressed: () => ref.read(countProvider1).state++,
               child: const Icon(
                 Icons.add,
               ),
@@ -60,7 +59,7 @@ class PracticePage extends ConsumerWidget {
             const SizedBox(width: 10.0),
             FloatingActionButton(
               heroTag: '222',
-              onPressed: () => counterRead.decrement(),
+              onPressed: () => ref.read(countProvider2).state++,
               child: const Icon(
                 Icons.remove,
               ),
@@ -68,7 +67,10 @@ class PracticePage extends ConsumerWidget {
             const SizedBox(width: 10.0),
             FloatingActionButton(
               heroTag: '333',
-              onPressed: () => counterRead.initCount(),
+              onPressed: () {
+                ref.read(countProvider1).state = 0;
+                ref.read(countProvider2).state = 10;
+              },
               child: const Icon(
                 Icons.refresh,
               ),
