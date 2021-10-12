@@ -17,9 +17,9 @@ class RoutePage extends StatelessWidget {
           children: [
             ElevatedButton(
                 onPressed: () {
-                  Get.toNamed('/select');
+                  Get.toNamed('/scroll_v2');
                 },
-                child: const Text('Select')),
+                child: const Text('Scroll v2')),
             ElevatedButton(
                 onPressed: () {
                   Get.toNamed('/practice');

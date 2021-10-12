@@ -52,6 +52,9 @@ class _ScrollPageState extends ConsumerState<ScrollPage> {
         builderDelegate: PagedChildBuilderDelegate<User>(
           itemBuilder: (context, item, index) {
             return ListTile(
+              tileColor: ref.watch(userReadProvider)[index].like
+                  ? Colors.amber
+                  : Colors.white,
               title: Text(
                 item.name + ': ${item.id}',
                 style: const TextStyle(
@@ -59,7 +62,9 @@ class _ScrollPageState extends ConsumerState<ScrollPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                ref.read(userProvider.notifier).setLike(item.id);
+              },
             );
           },
         ),
