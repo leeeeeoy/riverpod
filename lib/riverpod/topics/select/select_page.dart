@@ -1,14 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_flutter/riverpod/topics/select/model/user.dart';
 import 'package:riverpod_flutter/riverpod/topics/select/provider/user_provider.dart';
 
 class SelectPage extends ConsumerWidget {
-  SelectPage({Key? key}) : super(key: key);
+  const SelectPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final users = ref.watch(usersProvider);
+    User testUser = User(id: 1, name: '메롱', age: '123123');
+    final user = ref.watch(userProvider(testUser));
+
+    ref.listen(userProvider(testUser), (user) {
+      print('유저변경: $user');
+    });
+    ref.listen(userProvider(testUser).select((u) => u.name), (name) {
+      print('이름변경: $name');
+    });
+    ref.listen(userProvider(testUser).select((u) => u.age), (age) {
+      print('나이변경: $age');
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -19,21 +31,21 @@ class SelectPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              'user1: ' + '${users.users[0]}',
+              'user: $user',
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'user2: ' + '${users.users[1]}',
+              'user.name: ${user.name}',
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'user3: ' + '${users.users[2]}',
+              'user.age: ${user.age}',
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -41,21 +53,21 @@ class SelectPage extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                ref.read(usersProvider.notifier).setUserAge(0);
+                ref.read(userProvider(testUser).notifier).setAge();
               },
               child: const Text('Change user age'),
             ),
             ElevatedButton(
               onPressed: () {
-                ref.read(usersProvider.notifier).setUserAge(1);
+                ref.read(userProvider(testUser).notifier).setName();
               },
               child: const Text('Change user age'),
             ),
             ElevatedButton(
               onPressed: () {
-                ref.read(usersProvider.notifier).setUserAge(2);
+                ref.read(userProvider(testUser).notifier).resetUser();
               },
-              child: const Text('Change user age'),
+              child: const Text('Reset user'),
             ),
           ],
         ),

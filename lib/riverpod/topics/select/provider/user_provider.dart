@@ -18,11 +18,17 @@ class MyUser extends StateNotifier<User> {
 
   void setName() => state = state.copyWith(name: 'Lee');
   void setAge() => state = state.copyWith(age: '21');
+  void resetUser() => state = state.copyWith(name: '메롱', age: '123123');
 }
 
-// final userProvider = StateNotifierProvider<MyUser, User>((ref) {
-//   return MyUser();
-// });
+final userProvider =
+    StateNotifierProvider.family<MyUser, User, User>((ref, user) {
+  return MyUser(
+    id: user.id,
+    name: user.name,
+    age: user.age,
+  );
+});
 
 class MyUsers extends StateNotifier<Users> {
   MyUsers()

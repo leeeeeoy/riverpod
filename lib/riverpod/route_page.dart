@@ -32,9 +32,14 @@ class RoutePage extends StatelessWidget {
                 child: const Text('Scroll')),
             ElevatedButton(
                 onPressed: () {
-                  Get.toNamed('/stream');
+                  Get.toNamed('/observer');
                 },
-                child: const Text('Stream')),
+                child: const Text('Observer')),
+            ElevatedButton(
+                onPressed: () {
+                  Get.toNamed('/select');
+                },
+                child: const Text('Select')),
           ],
         ),
       ),
